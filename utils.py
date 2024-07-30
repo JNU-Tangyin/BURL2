@@ -100,7 +100,7 @@ class Preprocess:
 
         # print(df.loc[:, '0'].unique())    #提取顶级域名位，交给wenxin chatbot得到顶级域名和非顶级域名的列表，写道filtter.py中
         def drop_duplicates_on_domain(top_i: int = 0):
-            use_df: pd.DataFrame = df.copy(deep=True).loc[:, ['序号', '标签', str(top_i)]]
+            use_df: pd.DataFrame = df.copy(deep=True).loc[:, ['序号', '标签', top_i]]
             use_df = use_df.dropna()
             print("去空值，即去掉不存在{}级域名的地址{}个".format(top_i, df.__len__() - use_df.__len__()))
             # 先按标签和domain去重
