@@ -104,10 +104,10 @@ class Preprocess:
             use_df = use_df.dropna()
             print("去空值，即去掉不存在{}级域名的地址{}个".format(top_i, df.__len__() - use_df.__len__()))
             # 先按标签和domain去重
-            dropped = use_df.drop_duplicates(['标签', str(top_i)])
-            duplicates = dropped.loc[dropped.duplicated([str(top_i)]), :]
+            dropped = use_df.drop_duplicates(['标签', top_i])
+            duplicates = dropped.loc[dropped.duplicated([top_i]), :]
             print("{}级域名中的复用域名有{}个".format(top_i, duplicates.__len__()))
-            return duplicates.loc[:, str(top_i)].unique().tolist()
+            return duplicates.loc[:, top_i].unique().tolist()
 
         duplicate_li = []
         print("提取对齐后的复用域名, 存为duplicate.thg, duplicate.thg: 列表[[],[]...]索引是n级域名，值是复用列表")
