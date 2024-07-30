@@ -111,7 +111,7 @@ class Preprocess:
 
         duplicate_li = []
         print("提取对齐后的复用域名, 存为duplicate.thg, duplicate.thg: 列表[[],[]...]索引是n级域名，值是复用列表")
-        for i in range(self.max_len):
+        for i in range(int(self.max_len)):
             duplicate_li.append(drop_duplicates_on_domain(i))
 
         with open("duplicate.thg", "wb") as w:
