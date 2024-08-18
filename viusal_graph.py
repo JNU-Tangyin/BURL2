@@ -1,7 +1,6 @@
 import pickle
 import networkx as nx
 import matplotlib.pyplot as plt
-import torch
 from networkx.classes.reportviews import NodeView, NodeDataView
 import plotly.graph_objects as go
 import plotly.express as px  # 用于快速创建统计图表
@@ -228,21 +227,28 @@ def build_graph():
         'club', 'us'
     ]
     try:
-        df = pd.read_csv("host_split.csv")
+        df = pd.read_csv("data/host_split.csv")
     except:
-        df = pd.read_csv("host_split.csv", encoding='gbk')
+        df = pd.read_csv("data/host_split.csv", encoding='gbk')
     df = df.sort_values(by="len")
     df = df.reset_index(drop=True)
     node = []
     edge = []
     for index in tqdm(df.index):
+        node.append({"node_id": index, "node_class": df.loc[index, '标签']})
         for col in range(int(df.loc[index, 'len'])):
             tag = df.loc[index, str(col)]
             for iter_i in range(index, df.__len__()):
                 goal = df.loc[iter_i, str(col)]
                 if goal == tag and tag not in tlds:
-                    node.append({"node_id": index, "node_class": df.loc[index, '标签']})
                     edge.append({'edge': (index, iter_i), 'edge_name': tag})
+                    # print("标签：{}, 主机地址：{}, 边：{}, 边标签：{}, 边主机地址: {}".format(
+                    #     df.loc[index, '标签'],
+                    #     df.loc[index, "主机地址"],
+                    #     tag,
+                    #     df.loc[iter_i, '标签'],
+                    #     df.loc[iter_i, "主机地址"]
+                    # ))
     with open("graph_info.thg", "wb") as w:
         pickle.dump((node, edge), w)
 
