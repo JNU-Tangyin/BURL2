@@ -227,15 +227,15 @@ def build_graph():
         'club', 'us'
     ]
     try:
-        df = pd.read_csv("data/host_split.csv")
+        df = pd.read_csv("data/host_split_res.csv")
     except:
-        df = pd.read_csv("data/host_split.csv", encoding='gbk')
+        df = pd.read_csv("data/host_split_res.csv", encoding='gbk')
     df = df.sort_values(by="len")
     df = df.reset_index(drop=True)
     node = []
     edge = []
     for index in tqdm(df.index):
-        node.append({"node_id": index, "node_class": df.loc[index, '标签']})
+        node.append({"node_id": index, "node_class": df.loc[index, '标签'], "recognize": df.loc[index, '预测']})
         for col in range(int(df.loc[index, 'len'])):
             tag = df.loc[index, str(col)]
             for iter_i in range(index, df.__len__()):
